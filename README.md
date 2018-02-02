@@ -20,4 +20,4 @@
 ---
 **others**
 
-none
+[MIT LICENSE](./LICENSE)
