@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="construct.h" />
+    <ClInclude Include="iterator.h" />
     <ClInclude Include="iterator_base.h" />
     <ClInclude Include="type.h" />
     <ClInclude Include="type_traits.h" />

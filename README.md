@@ -10,8 +10,8 @@
 
 - [x] type_traits
 - [x] allocator
-- [ ] list
 - [ ] iterator
+- [ ] list
 - [ ] array
 - [ ] vector
 - [ ] map
