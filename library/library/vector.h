@@ -1,9 +1,15 @@
+/*
+	vector.h
+	created by CanftIn at 2/4/2018
+	power by CanftIn_tools project https://github.com/CanftIn/CanftIn_tools
+*/
 #pragma once
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
 #include "allocator.h"
 #include "iterator.h"
+#include "uninitialized.h"
 
 // not support difference_type iterator
 // you can do it like:
@@ -99,36 +105,40 @@ namespace Can
 	public:
 		constexpr vector() : start_(0), finish_(0), endOfStorage_(0) {} = default;
 
-		vector(const size_type& reserve_size)
+		vector(const size_type n)
 		{
-			void *mem = malloc(sizeof(value_type) * reserve_type);
+			start_ = Alloc::allocate(n);
+			uninitialized_fill_n(start_, n, value_type());
+			finish_ = endOfStorage_ = start_ + n;
+		}
 
-			if (mem == 0)
-				throw std::bad_alloc();
-
-			m_array = reinterpret_cast<T*>(mem);
-			m_capacity = reserve_size;
+		vector(const size_type n, const value_type& value)
+		{
+			start_ = Alloc::allocate(n);
+			uninitialized_fill_n(start_, n, value);
+			finish_ = endOfStorage_ = start_ + n;
 		}
 
 		vector(const std::initializer_list<value_type>& list)
 		{
-			void *mem = malloc(sizeof(value_type) * list.size());
-			if (mem == 0)
-				throw std::bad_alloc();
-
-			m_array = reinterpret_cast<T*>(mem);
-			m_capacity = list.size();
-
-			size_type index = 0;
+			start_ = Alloc::allocate(list.size());
+			iterator = start_;
 			for (const auto& it : list)
 			{
-				new(&m_array[index]) value_type(it);
-				index++;
+				new(iterator) value_type(it);
+				iterator++;
 			}
-
-			m_size = index;
 		}
 
+		template<class InputIterator>
+		vector(InputIterator first, InputIterator last)
+		{
+			start_ = Alloc::allocate(last - first);
+			finish = uninitialized_copy(first, last, start_);
+			endOfStorage_ = finish_;
+		}
+
+		/*
 		vector(const vector& vec)
 		{
 			this->reserve(vec.m_capacity);
@@ -146,18 +156,15 @@ namespace Can
 			vec.m_capacity = vec.m_size = 0;
 			vec.m_array = nullptr;
 		}
+		*/
 
 		~vector() noexcept
 		{
-			if (m_array == 0)
-				return;
-
-			for (size_type i = 0; i < m_size; ++i)
-				m_array[i].~value_type();
-
-			free(m_array);
+			Alloc::destroy(start_, finish_);
+			Alloc::deallocate(start_, endOfStorage_ - start_);
 		}
 
+		/*
 		vector& operator=(const vector& vec)
 		{
 			this->clear();
@@ -248,7 +255,23 @@ namespace Can
 				return;
 			}
 		}
+		*/
 
+		iterator begin() 
+		{ 
+			return iterator(start_); 
+		}
+
+		iterator end()
+		{ 
+			return iterator(finish_); 
+		}
+
+		void clear()
+		{
+			Alloc::destroy(start_, finish_);
+			finish_ = start_;
+		}
 	};
 }
 
