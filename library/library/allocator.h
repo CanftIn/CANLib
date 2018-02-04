@@ -2,6 +2,7 @@
 #ifndef _ALLOCATOR_H_
 #define _ALLOCATOR_H_
 
+#include <cassert>
 #include <new>
 #include <cstdlib>
 
@@ -66,7 +67,7 @@ namespace Can
 	{
 		if (bytes > _MAX_BYTES)
 		{
-			return Malloc_Allocator::allocate(bytes);
+			return malloc(bytes);
 		}
 		size_t index = FREELIST_INDEX(bytes);
 		obj *list = free_list[index];
@@ -85,7 +86,7 @@ namespace Can
 	{
 		if (bytes > _MAX_BYTES)
 		{
-			Malloc_Allocator::deallocate(ptr, bytes);
+			free(ptr);
 			return;
 		}
 		size_t index = FREELIST_INDEX(bytes);
@@ -187,74 +188,64 @@ namespace Can
 	}
 
 	//first allocator
-	class Malloc_Allocator
+	template<class T>
+	class Allocator
 	{
 	public:
-		static void* allocate(size_t n)
-		{
-			void *result = malloc(n);
-			if (result == nullptr)
-				result == oom_malloc(n);
-			return (result);
-		}
+		typedef T			value_type;
+		typedef T*			pointer;
+		typedef const T*	const_pointer;
+		typedef T&			reference;
+		typedef const T&	const_reference;
+		typedef size_t		size_type;
+		typedef ptrdiff_t	difference_type;
+	public:
+		static T *allocate();
+		static T *allocate(size_t n);
+		static void deallocate(T *ptr);
+		static void deallocate(T *ptr, size_t n);
 
-		static void deallocate(void *p, size_t)
-		{
-			free(p);
-		}
-
-		static void* reallocate(void *p, size_t, size_t new_size)
-		{
-			void *result = realloc(p, new_size);
-			if (result == nullptr)
-				result = oom_realloc(p, new_size);
-			return (result);
-		}
-
-		static void(*set_malloc_handler(void(*f)()))()
-		{
-			void(*old)() = malloc_allo_oom_handler;
-			malloc_allo_oom_handler = f;
-			return (old);
-		}
-
-	private:
-		static void* oom_malloc(size_t);
-		static void* oom_realloc(void*, size_t);
-		static void(*malloc_allo_oom_handler)();
+		static void construct(T *ptr);
+		static void construct(T *ptr, const T& value);
+		static void destroy(T *ptr);
+		static void destroy(T *first, T *last);
 	};
 
-	void(*Malloc_Allocator::malloc_allo_oom_handler)() = nullptr;
-
-	void* Malloc_Allocator::oom_malloc(size_t n)
-	{
-		void(*my_malloc_handler)();
-		void *result;
-		for (;;)
-		{
-			my_malloc_handler = malloc_allo_oom_handler;
-			if (my_malloc_handler == nullptr)
-				throw std::bad_alloc();
-			(*my_malloc_handler)();
-			result = malloc(n);
-			if (result)
-				return (result);
-		}
+	template<class T>
+	T *Allocator<T>::allocate() {
+		return static_cast<T *>(Alloc::allocate(sizeof(T)));
+	}
+	template<class T>
+	T *Allocator<T>::allocate(size_t n) {
+		assert(n != 0);
+		return static_cast<T *>(Alloc::allocate(sizeof(T) * n));
+	}
+	template<class T>
+	void Allocator<T>::deallocate(T *ptr) {
+		Alloc::deallocate(static_cast<void *>(ptr), sizeof(T));
+	}
+	template<class T>
+	void Allocator<T>::deallocate(T *ptr, size_t n) {
+		assert(n != 0);
+		Alloc::deallocate(static_cast<void *>(ptr), sizeof(T)* n);
 	}
 
-	void* Malloc_Allocator::oom_realloc(void *p, size_t n)
-	{
-		void(*my_malloc_handler)();
-		void *result;
-		for (;;)
-		{
-			my_malloc_handler = malloc_allo_oom_handler;
-			if (my_malloc_handler == nullptr)
-				throw std::bad_alloc();
-			(*my_malloc_handler)();
-			result = realloc(p, n);
-			if (result)
-				return (result);
+	template<class T>
+	void Allocator<T>::construct(T *ptr) {
+		new(ptr) T();
+	}
+	template<class T>
+	void Allocator<T>::construct(T *ptr, const T& value) {
+		new(ptr) T(value);
+	}
+	template<class T>
+	void Allocator<T>::destroy(T *ptr) {
+		ptr->~T();
+	}
+	template<class T>
+	void Allocator<T>::destroy(T *first, T *last) {
+		for (; first != last; ++first) {
+			first->~T();
 		}
 	}
 }
