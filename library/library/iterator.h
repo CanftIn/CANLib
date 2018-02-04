@@ -40,7 +40,8 @@ namespace Can
 		typedef void                reference;
 	};
 
-	template <class T, class Distance> struct forward_iterator
+	template <class T, class Distance> 
+	struct forward_iterator
 	{
 		typedef forward_iterator_tag	iterator_category;
 		typedef T						value_type;
@@ -49,7 +50,8 @@ namespace Can
 		typedef T&						reference;
 	};
 
-	template <class T, class Distance> struct bidirectional_iterator
+	template <class T, class Distance> 
+	struct bidirectional_iterator
 	{
 		typedef bidirectional_iterator_tag	iterator_category;
 		typedef T							value_type;
@@ -58,7 +60,8 @@ namespace Can
 		typedef T&							reference;
 	};
 
-	template <class T, class Distance> struct random_access_iterator
+	template <class T, class Distance> 
+	struct random_access_iterator
 	{
 		typedef random_access_iterator_tag	iterator_category;
 		typedef T							value_type;

@@ -148,6 +148,7 @@
     <ClInclude Include="iterator_base.h" />
     <ClInclude Include="type.h" />
     <ClInclude Include="type_traits.h" />
+    <ClInclude Include="vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
