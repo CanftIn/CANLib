@@ -1,24 +1,32 @@
-#pragma once
-
+#ifndef APPLICATION_H_
+#define APPLICATION_H_
 #include "../Basic.h"
 #include "Base.h"
+#include "Window.h"
 
 #include <Windows.h>
 
 namespace CAN
 {
+	//class Window;
+
 	class Application : implements Object
 	{
 	private:
 		static HINSTANCE InstHandle;
+		static Window* pPrimaryWindow;
 
 	public:
 		static const wchar_t* WinClassName;
 
 	public:
-		static HINSTANCE GetInstanceHandle()
-		{
-			return InstHandle;
-		}
+		static void Init(HINSTANCE inst) { InstHandle = inst; }
+		inline static HINSTANCE GetInstanceHandle() { return InstHandle; }
+		inline static Window* GetPrimaryWindow() { return pPrimaryWindow; }
+
+		static int Run(Window* pWindow);
+		static void Dispose();
 	};
 }
+
+#endif

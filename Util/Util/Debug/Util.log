@@ -1,0 +1,9 @@
+﻿  Application.cpp
+e:\2018\canftin_library\util\util\windows\window.h(38): warning C4065: switch statement contains 'default' but no 'case' labels
+  Generating Code...
+  Compiling...
+  Window.cpp
+e:\2018\canftin_library\util\util\windows\window.h(38): warning C4065: switch statement contains 'default' but no 'case' labels
+  Generating Code...
+Application.obj : warning LNK4006: "long __stdcall CAN::WndProc(struct HWND__ *,unsigned int,unsigned int,long)" (?WndProc@CAN@@YGJPAUHWND__@@IIJ@Z) already defined in Window.obj; second definition ignored
+  Util.vcxproj -> E:\2018\CanftIn_Library\Util\Debug\Util.lib

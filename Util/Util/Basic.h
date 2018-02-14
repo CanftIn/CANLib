@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BASIC_H_
+#define BASIC_H_
 
 // C++ support
 #include <cstdio>
@@ -34,3 +35,5 @@ namespace CAN
 	typedef			 __int64 int64;
 	typedef unsigned __int64 uint64;
 }
+
+#endif

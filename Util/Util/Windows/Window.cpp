@@ -3,9 +3,11 @@
 
 namespace CAN
 {
-	const wchar_t *Application::WinClassName = L"CANWinClass";
+	const wchar_t* Application::WinClassName = L"CANWinClass";
 
-	bool Window::Create(const wstring& strTitle, const uint iResX, const uint iResY)
+	bool Window::Create(const wstring& strTitle,
+		const uint iResX,
+		const uint iResY)
 	{
 		mstrTitle = strTitle;
 		miResX = iResX;
@@ -15,6 +17,8 @@ namespace CAN
 
 		DWORD winStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
 		DWORD winStyleEX = WS_EX_CLIENTEDGE;
+
+		return 0;
 	}
 
 	bool Window::RegisterWindowClass()

@@ -1,10 +1,10 @@
-#pragma once
-
+#ifndef BASE_H_
+#define BASE_H_
 #include "../Interface.h"
 
 namespace CAN
 {
-	Interface Object
+	/*interface*/class Object
 	{
 	public:
 		virtual ~Object()
@@ -13,3 +13,5 @@ namespace CAN
 		}
 	};
 }
+
+#endif

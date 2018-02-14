@@ -1,4 +1,6 @@
-#pragma once
+#ifndef EVENT_H_
+#define EVENT_H_
+
 #include "../Basic.h"
 #include "Base.h"
 
@@ -11,11 +13,13 @@ namespace CAN
 		typedef void (Class::*FuncHandler) (Params...);
 
 	private:
-		Class* mpOwner;
+		Class * mpOwner;
 		FuncHandler mFHandler;
 
 	public:
-		Delegate(Class* pOwner, FuncHandler func) : mpOwner(pOwner), mFHandler(func)
+		Delegate(Class* pOwner, FuncHandler func)
+			: mpOwner(pOwner)
+			, mFHandler(func)
 		{
 		}
 
@@ -24,17 +28,10 @@ namespace CAN
 			(mpOwner->*mFHandler)(params...);
 		}
 
-		inline Class* GetOwner() const
-		{
-			return mpOwner;
-		}
+		Class* GetOwner() const { return mpOwner; }
+		FuncHandler GetFuncHandler() const { return mFHandler; }
 
-		inline FuncHandler GetFuncHandler() const
-		{
-			return mFHandler;
-		}
-
-		bool operator== (const Delegate<Class, Param...>& other)
+		bool operator == (const Delegate<Class, Params...>& other)
 		{
 			return mpOwner == other.GetOwner() && mFHandler == other.GetFuncHandler();
 		}
@@ -76,3 +73,5 @@ namespace CAN
 		}
 	};
 }
+
+#endif
