@@ -14,10 +14,16 @@
     <ClInclude Include="Windows\Event.h">
       <Filter>Windows</Filter>
     </ClInclude>
+    <ClInclude Include="Interface.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
       <UniqueIdentifier>{8e980659-47ec-42b3-ba63-619f4270df53}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Windows\Window.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

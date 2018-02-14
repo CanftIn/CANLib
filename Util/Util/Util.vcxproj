@@ -116,10 +116,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Basic.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="Windows\Application.h" />
     <ClInclude Include="Windows\Base.h" />
     <ClInclude Include="Windows\Event.h" />
     <ClInclude Include="Windows\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Windows\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
