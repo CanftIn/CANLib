@@ -33,7 +33,7 @@ namespace CAN
 			const uint iResX,
 			const uint iResY);
 
-		virtual void Destory();
+		virtual void Destroy();
 
 		inline HWND GetHandle() const { return mhWnd; }
 
@@ -52,7 +52,7 @@ namespace CAN
 			mInitializeEvent = initEvent;
 		}
 
-		inline void setResize(const ResizeEvent& resizeEvent)
+		inline void SetResize(const ResizeEvent& resizeEvent)
 		{
 			mResizeEvent = resizeEvent;
 		}
@@ -65,6 +65,22 @@ namespace CAN
 		bool RegisterWindowClass();
 	};
 
+	class GLWindow : implements Window
+	{
+	protected:
+		HGLRC mhRC;
+		HDC mhDC;
+
+		bool Create(const wstring& strTitle, const uint iWidth, const uint iHeight);
+		virtual void Destroy();
+
+	public:
+		void InvokeMainLoop()
+		{
+			mMainLoopEvent.Invoke(this, EventArgs());
+			SwapBuffers(mhDC);
+		}
+	};
 }
 
 #endif

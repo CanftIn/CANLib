@@ -3,7 +3,7 @@
 
 namespace CAN
 {
-	const wchar_t* Application::WinClassName = L"CANWinClass";
+	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	bool Window::Create(const wstring& strTitle,
 		const uint iWidth,
@@ -41,7 +41,7 @@ namespace CAN
 		return true;
 	}
 
-	void Window::Destory()
+	void Window::Destroy()
 	{
 		mReleaseEvent.Invoke(this, EventArgs());
 		::UnregisterClass(Application::WinClassName, Application::GetInstanceHandle());
@@ -73,9 +73,68 @@ namespace CAN
 	{
 		switch (msg)
 		{
+		case WM_ACTIVATE:
+			if (!HIWORD(wParam))
+				Application::GetPrimaryWindow()->SetActive(true);
+			else
+				Application::GetPrimaryWindow()->SetActive(false);
+			break;
+		case WM_SIZE:
+			Application::GetPrimaryWindow()->mResizeEvent.Invoke(Application::GetPrimaryWindow(), ResizeEventArgs(LOWORD(lParam), HIWORD(lParam)));
+			break;
+		case WM_DESTROY:
+			Application::GetPrimaryWindow()->Destroy();
+			PostQuitMessage(0);
+			break;
 		default:
 			return DefWindowProc(hwnd, msg, wParam, lParam);
 		}
 		return 0;
+	}
+
+	bool GLWindow::Create(const wstring& strTitle, const uint iWidth, const uint iHeight)
+	{
+		if (!Window::Create(strTitle, iWidth, iHeight))
+			return false;
+
+		PIXELFORMATDESCRIPTOR pf =
+		{
+			sizeof(PIXELFORMATDESCRIPTOR),
+			1,
+			PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
+			PFD_TYPE_RGBA,
+			24,
+			0, 0, 0, 0, 0, 0,
+			0,
+			0,
+			0,
+			0, 0, 0, 0,
+			32,
+			0,
+			0,
+			PFD_MAIN_PLANE,
+			0,
+			0, 0, 0
+		};
+		mhDC = ::GetDC(GetHandle());
+		int idx = ::ChoosePixelFormat(mhDC, &pf);
+		::SetPixelFormat(mhDC, idx, &pf);
+
+		mhRC = ::wglCreateContext(mhDC);
+		::wglMakeCurrent(mhDC, mhRC);
+
+		return true;
+	}
+
+	void GLWindow::Destroy()
+	{
+		Window::Destroy();
+
+		::wglMakeCurrent(0, 0);
+		::wglDeleteContext(mhRC);
+		::ReleaseDC(mhWnd, mhDC);
+
+		mhDC = 0;
+		mhRC = 0;
 	}
 }

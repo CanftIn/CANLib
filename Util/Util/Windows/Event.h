@@ -16,7 +16,7 @@ namespace CAN
 		virtual void Invoke(Params... params) const = 0;
 		virtual void* GetOwner() const = 0;
 		virtual void* GetFuncHandler() const = 0;
-		virtual Delegate<Param...>* Clone() const = 0;
+		virtual Delegate<Params...>* Clone() const = 0;
 
 		bool operator == (const Delegate<Params...>& other) const
 		{
@@ -61,7 +61,7 @@ namespace CAN
 
 	public:
 		MemberFuncDelegate(Class* pOwner, FuncHandler func) : mpOwner(pOwner), mFHandler(func) {}
-		void Invoke(Parms... args) const
+		void Invoke(Params... args) const
 		{
 			(mpOwner->*mFHandler)(args...);
 		}
@@ -95,7 +95,7 @@ namespace CAN
 			Release();
 			for (const auto& it : other.mvListeners)
 				mvListeners.push_back(it->Clone());
-			return *this.
+			return *this;
 		}
 
 		Event(typename StaticFuncDelegate<Params...>::FuncHandler pFunc)
@@ -123,7 +123,7 @@ namespace CAN
 		{
 			for (auto& listener : mvListeners)
 			{
-				listener.Invoke(params...);
+				listener->Invoke(params...);
 			}
 		}
 
@@ -135,7 +135,7 @@ namespace CAN
 		// StaticFuncDelegate
 		void Bind(typename StaticFuncDelegate<Params...>::FuncHandler pFunc)
 		{
-			mvListeners.push_bac(new StaticFuncDelegate<Params...>(pFunc));
+			mvListeners.push_back(new StaticFuncDelegate<Params...>(pFunc));
 		}
 
 		void Unbind(typename StaticFuncDelegate<Params...>::FuncHandler pFunc)
@@ -164,11 +164,6 @@ namespace CAN
 				delete (*it);
 				mvListeners.erase(it);
 			}
-		}
-
-		bool Attached() const
-		{
-			return !mvListeners.empty();
 		}
 	};
 
