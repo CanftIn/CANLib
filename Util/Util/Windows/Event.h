@@ -6,47 +6,119 @@
 
 namespace CAN
 {
-	template<class Class, typename... Params>
+	template<typename... Params>
 	class Delegate
 	{
 	public:
-		typedef void (Class::*FuncHandler) (Params...);
+		typedef void (*FuncHandler) (Params...);
+
+	public:
+		virtual void Invoke(Params... params) const = 0;
+		virtual void* GetOwner() const = 0;
+		virtual void* GetFuncHandler() const = 0;
+		virtual Delegate<Param...>* Clone() const = 0;
+
+		bool operator == (const Delegate<Params...>& other) const
+		{
+			return GetOwner() == other.GetOwner() && GetFuncHandler() == other.GetFuncHandler();
+		}
+	};
+
+	template<typename... Params>
+	class StaticFuncDelegate : implements Delegate<Params...>
+	{
+	public:
+		typedef void(*FuncHandler) (Params...);
 
 	private:
-		Class * mpOwner;
 		FuncHandler mFHandler;
 
 	public:
-		Delegate(Class* pOwner, FuncHandler func)
-			: mpOwner(pOwner)
-			, mFHandler(func)
+		StaticFuncDelegate(FuncHandler func) : mFHandler(func) {}
+		void Invoke(Params... args) const
 		{
+			(*mFHandler)(args...);
 		}
 
-		void Invoke(Params... params)
-		{
-			(mpOwner->*mFHandler)(params...);
-		}
+		void* GetOwner() const { return nullptr; }
+		void* GetFuncHandler() const { return (void*)(*(int*)&mFHandler); }
 
-		Class* GetOwner() const { return mpOwner; }
-		FuncHandler GetFuncHandler() const { return mFHandler; }
-
-		bool operator == (const Delegate<Class, Params...>& other)
+		virtual Delegate<Params...>* Clone() const
 		{
-			return mpOwner == other.GetOwner() && mFHandler == other.GetFuncHandler();
+			return new StaticFuncDelegate<Params...>(mFHandler);
 		}
 	};
 
 	template<class Class, typename... Params>
-	class Event
+	class MemberFuncDelegate : implements Delegate<Params...>
 	{
 	public:
-		typedef Delegate<Class, Params...> _Delegate;
+		typedef void (Class::*FuncHandler)(Params...);
 
-	protected:
-		vector<_Delegate> mvListeners;
+	private:
+		Class* mpOwner;
+		FuncHandler mFHandler;
 
 	public:
+		MemberFuncDelegate(Class* pOwner, FuncHandler func) : mpOwner(pOwner), mFHandler(func) {}
+		void Invoke(Parms... args) const
+		{
+			(mpOwner->*mFHandler)(args...);
+		}
+
+		void* GetOwner() const { return mpOwner; }
+		void* GetFuncHandler() const { return (void*)(*(int*)&mFHandler); }
+
+		virtual Delegate<Params...>* Clone() const
+		{
+			return new MemberFuncDelegate<Class, Params...>(mpOwner, mFHandler);
+		}
+	};
+
+	template<typename... Params>
+	class Event
+	{
+	protected:
+		vector<Delegate<Params...>*> mvListeners;
+
+	public:
+		Event() {}
+		~Event() { Release(); }
+
+		Event(const Event<Params...>& other)
+		{
+			operator=(*other);
+		}
+
+		Event<Params...>& operator=(const Event<Params...>& other)
+		{
+			Release();
+			for (const auto& it : other.mvListeners)
+				mvListeners.push_back(it->Clone());
+			return *this.
+		}
+
+		Event(typename StaticFuncDelegate<Params...>::FuncHandler pFunc)
+		{
+			Bind(pFunc);
+		}
+
+		template<class Class>
+		Event(Class* pListener, typename MemberFuncDelegate<Class, Params...>::FuncHandler pFunc)
+		{
+			Bind(pListener, pFunc);
+		}
+
+		void Release()
+		{
+			for (auto& it : mvListeners) 
+			{
+				delete it;
+				it = NULL;
+			}
+			mvListeners.clear();
+		}
+
 		void Invoke(Params... params)
 		{
 			for (auto& listener : mvListeners)
@@ -55,16 +127,43 @@ namespace CAN
 			}
 		}
 
-		void Bind(Class* pListener, typename _Delegate::FuncHandler pFunc)
+		bool Attached() const
 		{
-			mvListeners.push_back(std::move(_Delegate(pListener, pFunc)));
+			return !mvListeners.empty();
 		}
 
-		void Unbind(Class* pListener, typename _Delegate::FuncHandler pFunc)
+		// StaticFuncDelegate
+		void Bind(typename StaticFuncDelegate<Params...>::FuncHandler pFunc)
 		{
-			auto it = std::find(mvListeners.begin(), mvListeners.end(), _Delegate(pListener, pFunc));
+			mvListeners.push_bac(new StaticFuncDelegate<Params...>(pFunc));
+		}
+
+		void Unbind(typename StaticFuncDelegate<Params...>::FuncHandler pFunc)
+		{
+			auto it = std::find(mvListeners.begin(), mvListeners.end(), StaticFuncDelegate<Params...>(pFunc));
 			if (it != mvListeners.end())
+			{
+				delete (*it);
 				mvListeners.erase(it);
+			}
+		}
+
+		// MemberFuncDelegate
+		template<class Class>
+		void Bind(Class* pListener, typename MemberFuncDelegate<Class, Params...>::FuncHandler pFunc)
+		{
+			mvListeners.push_back(new MemberFuncDelegate<Class, Params...>(pListener, pFunc));
+		}
+
+		template<class Class>
+		void Unbind(Class* pListener, typename MemberFuncDelegate<Class, Params...>::FuncHandler pFunc)
+		{
+			auto it = std::find(mvListeners.begin(), mvListeners.end(), MemberFuncDelegate<Class, Params...>(pListener, pFunc));
+			if (it != mvListeners.end())
+			{
+				delete (*it);
+				mvListeners.erase(it);
+			}
 		}
 
 		bool Attached() const
@@ -72,6 +171,37 @@ namespace CAN
 			return !mvListeners.empty();
 		}
 	};
+
+	class EventArgs : implements Object
+	{
+
+	};
+
+	class ResizeEventArgs : implements EventArgs
+	{
+	public:
+		int Width, Height;
+
+		ResizeEventArgs(int iW, int iH) : Width(iW), Height(iH)
+		{
+		}
+	};
+	
+	enum class MouseAction
+	{
+		LButtonDown, RButtonDown, LButtonUp, RButtonUp
+	};
+
+	class MouseEventArgs : implements EventArgs
+	{
+	public:
+		int X, Y;
+		MouseAction Action;
+	};
+
+	using NotifyEvent = Event<Object*, EventArgs>;
+	using ResizeEvent = Event<Object*, ResizeEventArgs>;
+	using MouseEvent = Event<Object*, MouseEventArgs>;
 }
 
 #endif

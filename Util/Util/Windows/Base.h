@@ -4,7 +4,7 @@
 
 namespace CAN
 {
-	/*interface*/class Object
+	CAN_Interface Object
 	{
 	public:
 		virtual ~Object()

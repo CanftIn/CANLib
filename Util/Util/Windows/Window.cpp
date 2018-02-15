@@ -6,19 +6,45 @@ namespace CAN
 	const wchar_t* Application::WinClassName = L"CANWinClass";
 
 	bool Window::Create(const wstring& strTitle,
-		const uint iResX,
-		const uint iResY)
+		const uint iWidth,
+		const uint iHeight)
 	{
 		mstrTitle = strTitle;
-		miResX = iResX;
-		miResY = iResY;
+		miWidth = iWidth;
+		miHeight = iHeight;
 
-		RegisterWindowClass();
+		if (!RegisterWindowClass())
+			return false;
 
 		DWORD winStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
 		DWORD winStyleEX = WS_EX_CLIENTEDGE;
 
-		return 0;
+		RECT rect = { 0, 0, miWidth, miHeight };
+		AdjustWindowRectEx(&rect, winStyle, NULL, winStyleEX);
+
+		mhWnd = ::CreateWindowEx(
+			winStyleEX,
+			Application::WinClassName,
+			mstrTitle.data(),
+			winStyle,
+			CW_USEDEFAULT,
+			CW_USEDEFAULT,
+			rect.right - rect.left,
+			rect.bottom - rect.top,
+			GetDesktopWindow(),
+			NULL,
+			Application::GetInstanceHandle(),
+			NULL
+		);
+		if (!mhWnd)
+			return false;
+		return true;
+	}
+
+	void Window::Destory()
+	{
+		mReleaseEvent.Invoke(this, EventArgs());
+		::UnregisterClass(Application::WinClassName, Application::GetInstanceHandle());
 	}
 
 	bool Window::RegisterWindowClass()
@@ -41,5 +67,15 @@ namespace CAN
 			return false;
 
 		return true;
+	}
+
+	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+	{
+		switch (msg)
+		{
+		default:
+			return DefWindowProc(hwnd, msg, wParam, lParam);
+		}
+		return 0;
 	}
 }

@@ -25,6 +25,8 @@
     <ClCompile Include="Windows\Window.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="Windows\Application.cpp" />
+    <ClCompile Include="Windows\Application.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
