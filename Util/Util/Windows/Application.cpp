@@ -6,16 +6,16 @@ namespace CAN
 {
 	HINSTANCE Application::InstHandle = NULL;
 	const wchar_t* Application::WinClassName = L"CANWinClass";
-	Window* Application::pPrimaryWindow = nullptr;
+	Window* Application::pMainWindow = nullptr;
 
 	int Application::Run(Window* pWindow)
 	{
 		HWND hWnd = pWindow->GetHandle();
-		pPrimaryWindow = pWindow;
+		pMainWindow = pWindow;
 		ShowWindow(hWnd, SW_SHOW);
 		UpdateWindow(hWnd);
 
-		pPrimaryWindow->mInitializeEvent.Invoke(pPrimaryWindow, EventArgs());
+		pMainWindow->mInitializeEvent.Invoke(pMainWindow, EventArgs());
 
 		MSG msg;
 		while (true)
@@ -32,10 +32,21 @@ namespace CAN
 			}
 			else if (pWindow->IsActive())
 			{
-				pPrimaryWindow->InvokeMainLoop();
+				pMainWindow->InvokeMainLoop();
 			}
 		}
 
+		pMainWindow->mReleaseEvent.Invoke(pMainWindow, EventArgs());
+		Dispose();
+
 		return (int)msg.wParam;
+	}
+
+	void Application::Dispose()
+	{
+		if (pMainWindow)
+			delete pMainWindow;
+
+		assert(!_CrtDumpMemoryLeaks());
 	}
 }

@@ -47,6 +47,27 @@ namespace CAN
 		::UnregisterClass(Application::WinClassName, Application::GetInstanceHandle());
 	}
 
+	bool Window::ProcessMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+	{
+		switch (msg)
+		{
+		case WM_ACTIVATE:
+			if (!HIWORD(wParam))
+				SetActive(true);
+			else
+				SetActive(false);
+			break;
+		case WM_SIZE:
+			mResizeEvent.Invoke(Application::GetMainWindow(), ResizeEventArgs(LOWORD(lParam), HIWORD(lParam)));
+			break;
+		case WM_DESTROY:
+			Destroy();
+			PostQuitMessage(0);
+			return true;
+		}
+		return false;
+	}
+
 	bool Window::RegisterWindowClass()
 	{
 		WNDCLASSEX winClass;
@@ -71,24 +92,14 @@ namespace CAN
 
 	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		switch (msg)
+		bool bProcessed = false;
+		Window* pWnd;
+		if (pWnd = Application::GetMainWindow())
 		{
-		case WM_ACTIVATE:
-			if (!HIWORD(wParam))
-				Application::GetPrimaryWindow()->SetActive(true);
-			else
-				Application::GetPrimaryWindow()->SetActive(false);
-			break;
-		case WM_SIZE:
-			Application::GetPrimaryWindow()->mResizeEvent.Invoke(Application::GetPrimaryWindow(), ResizeEventArgs(LOWORD(lParam), HIWORD(lParam)));
-			break;
-		case WM_DESTROY:
-			Application::GetPrimaryWindow()->Destroy();
-			PostQuitMessage(0);
-			break;
-		default:
-			return DefWindowProc(hwnd, msg, wParam, lParam);
+			bProcessed = pWnd->ProcessMessage(hwnd, msg, wParam, lParam);
 		}
+		if(!bProcessed)
+			return DefWindowProc(hwnd, msg, wParam, lParam);
 		return 0;
 	}
 

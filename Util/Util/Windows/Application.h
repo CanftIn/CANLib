@@ -14,7 +14,7 @@ namespace CAN
 	{
 	private:
 		static HINSTANCE InstHandle;
-		static Window* pPrimaryWindow;
+		static Window* pMainWindow;
 
 	public:
 		static const wchar_t* WinClassName;
@@ -22,7 +22,7 @@ namespace CAN
 	public:
 		static void Init(HINSTANCE inst) { InstHandle = inst; }
 		inline static HINSTANCE GetInstanceHandle() { return InstHandle; }
-		inline static Window* GetPrimaryWindow() { return pPrimaryWindow; }
+		inline static Window* GetMainWindow() { return pMainWindow; }
 
 		static int Run(Window* pWindow);
 		static void Dispose();

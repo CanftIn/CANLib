@@ -15,6 +15,9 @@
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="Windows\Thread.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
@@ -26,6 +29,9 @@
       <Filter>Windows</Filter>
     </ClCompile>
     <ClCompile Include="Windows\Application.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows\Thread.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
