@@ -1,6 +1,2 @@
-﻿  Window.cpp
-e:\2018\canftin_library\util\util\windows\window.cpp(22): warning C4838: conversion from 'CAN::uint' to 'LONG' requires a narrowing conversion
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  Application.cpp
+﻿  Application.cpp
   Util.vcxproj -> E:\2018\CanftIn_Library\Util\Debug\Util.lib

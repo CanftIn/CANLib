@@ -38,7 +38,7 @@ namespace CAN
 		inline HWND GetHandle() const { return mhWnd; }
 
 		bool IsActive() const { return mbActive; }
-		void SetActive(bool active) { mbActive = active; }
+		void SetActive(const bool active) { mbActive = active; }
 
 		virtual void InvokeMainLoop() { mMainLoopEvent.Invoke(this, EventArgs()); }
 

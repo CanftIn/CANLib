@@ -16,7 +16,7 @@ namespace CAN
 		if (!RegisterWindowClass())
 			return false;
 
-		DWORD winStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+		DWORD winStyle = WS_OVERLAPPEDWINDOW;
 		DWORD winStyleEX = WS_EX_CLIENTEDGE;
 
 		RECT rect = { 0, 0, miWidth, miHeight };

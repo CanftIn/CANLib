@@ -1,0 +1,13 @@
+﻿  Window.cpp
+e:\2018\canftin_library\util\util\windows\window.cpp(22): warning C4838: conversion from 'CAN::uint' to 'LONG' requires a narrowing conversion
+e:\2018\canftin_library\util\util\windows\event.h(44): warning C4312: 'type cast': conversion from 'int' to 'void *' of greater size
+  e:\2018\canftin_library\util\util\windows\event.h(44): note: while compiling class template member function 'void *CAN::StaticFuncDelegate<CAN::Object *,CAN::MouseEventArgs>::GetFuncHandler(void) const'
+  e:\2018\canftin_library\util\util\windows\event.h(101): note: see reference to class template instantiation 'CAN::StaticFuncDelegate<CAN::Object *,CAN::MouseEventArgs>' being compiled
+  e:\2018\canftin_library\util\util\windows\window.h(25): note: see reference to class template instantiation 'CAN::Event<CAN::Object *,CAN::MouseEventArgs>' being compiled
+  Application.cpp
+e:\2018\canftin_library\util\util\windows\event.h(44): warning C4312: 'type cast': conversion from 'int' to 'void *' of greater size
+  e:\2018\canftin_library\util\util\windows\event.h(44): note: while compiling class template member function 'void *CAN::StaticFuncDelegate<CAN::Object *,CAN::MouseEventArgs>::GetFuncHandler(void) const'
+  e:\2018\canftin_library\util\util\windows\event.h(101): note: see reference to class template instantiation 'CAN::StaticFuncDelegate<CAN::Object *,CAN::MouseEventArgs>' being compiled
+  e:\2018\canftin_library\util\util\windows\window.h(25): note: see reference to class template instantiation 'CAN::Event<CAN::Object *,CAN::MouseEventArgs>' being compiled
+  Generating Code...
+  Util.vcxproj -> E:\2018\CanftIn_Library\Util\x64\Debug\Util.lib
