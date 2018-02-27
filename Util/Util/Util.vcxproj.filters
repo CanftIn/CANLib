@@ -18,10 +18,22 @@
     <ClInclude Include="Windows\Thread.h">
       <Filter>Windows</Filter>
     </ClInclude>
+    <ClInclude Include="Math\Constants.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\VecBase.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vec2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
       <UniqueIdentifier>{6d250cc2-bd84-4e59-9984-fe38dfa8fd17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{1e77c6fb-3dc3-4635-9fc6-af9729c0bfb3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
