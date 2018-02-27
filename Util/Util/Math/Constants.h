@@ -92,7 +92,65 @@ namespace CAN
 			__forceinline operator unsigned char() const { return std::numeric_limits<unsigned char>::max(); }
 		} CAN_INFINITY, CAN_POS_INFINITY;
 
+		static struct NaN
+		{
+			__forceinline operator double() const { return std::numeric_limits<double>::quiet_NaN(); }
+			__forceinline operator float() const { return std::numeric_limits<float>::quiet_NaN(); }
+		} CAN_NAN;
 
+		static struct Epsilon
+		{
+			__forceinline operator double() const { return std::numeric_limits<double>::epsilon(); }
+			__forceinline operator float() const { return std::numeric_limits<float>::epsilon(); }
+		} CAN_EPSILON;
+
+		static struct Pi
+		{
+			__forceinline operator double() const { return 3.14159265358979323846; }
+			__forceinline operator float() const { return 3.14159265358979323846f; }
+		} CAN_PI;
+
+		static struct InvPi	// 1 / Pi
+		{
+			__forceinline operator double() const { return 0.31830988618379069122; }
+			__forceinline operator float() const { return 0.31830988618379069122f; }
+		} CAN_INV_PI;
+
+		static struct TwoPi
+		{
+			__forceinline operator double() const { return 6.283185307179586232; }
+			__forceinline operator float() const { return 6.283185307179586232f; }
+		} CAN_TWO_PI;
+
+		static struct PiOverTwo
+		{
+			__forceinline operator double() const { return 1.57079632679489661923; }
+			__forceinline operator float() const { return 1.57079632679489661923f; }
+		} CAN_PI_2;
+
+		static struct InvTwoPi
+		{
+			__forceinline operator double() const { return 0.15915494309189534561; }
+			__forceinline operator float() const { return 0.15915494309189534561f; }
+		} CAN_INV_2PI;
+
+		static struct FourPi
+		{
+			__forceinline operator double() const { return 12.566370614359172464; }
+			__forceinline operator float() const { return 12.566370614359172464f; }
+		} CAN_FOUR_PI;
+
+		static struct PiOverFour
+		{
+			__forceinline operator double() const { return 0.785398163397448309616; }
+			__forceinline operator float() const { return 0.785398163397448309616f; }
+		} CAN_PI_4;
+
+		static struct InvFourPi
+		{
+			__forceinline operator double() const { return 0.079577471545947672804; }
+			__forceinline operator float() const { return 0.079577471545947672804f; }
+		} CAN_INV_4PI;
 	}
 }
 

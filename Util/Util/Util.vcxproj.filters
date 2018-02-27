@@ -27,6 +27,18 @@
     <ClInclude Include="Math\Vec2.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="Math\Vec3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vec4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\CANMath.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\Memory.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
@@ -34,6 +46,9 @@
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{1e77c6fb-3dc3-4635-9fc6-af9729c0bfb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{03855ae9-d702-4473-a1b1-b60fe66df621}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

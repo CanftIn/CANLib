@@ -29,6 +29,24 @@
 
 GUI util framework is on working...
 
+Util Framework directory tree
+
+```
+└───Util
+    ├───Debug
+    ├───packages
+    │   ├───nupengl.core.0.1.0.1
+    │   └───nupengl.core.redist.0.1.0.1
+    ├───Util
+    │   ├───Debug
+    │   ├───Math
+    │   │   └───Math_test
+    │   ├───Memory
+    │   └───Windows
+    └───Viewer
+        └───Debug
+```
+
 ---
 ## others
 
