@@ -37,7 +37,7 @@ namespace CAN
 		inline int FloorToInt(float fVal) { return (int)fVal; }
 
 		template<class T1, class T2> inline auto Max(const T1& e1, const T2& e2) -> decltype(e1 + e2) { return e1 > e2 ? e1 : e2; }
-		template<class T1, class T2> inline auto AbsMax(const &T1 e1, const T2& e2) -> decltype(e1 + e2) { return Abs(e1) > Abs(e2) ? e1 : e2; }
+		template<class T1, class T2> inline auto AbsMax(const T1& e1, const T2& e2) -> decltype(e1 + e2) { return Abs(e1) > Abs(e2) ? e1 : e2; }
 		template<class T1, class T2> inline auto Min(const T1& e1, const T2& e2) -> decltype(e1 + e2) { return e1 < e2 ? e1 : e2; }
 		template<class T1, class T2> inline auto AbsMin(const T1& e1, const T2& e2) -> decltype(e1 + e2) { return Abs(e1) < Abs(e2) ? e1 : e2; }
 	}
