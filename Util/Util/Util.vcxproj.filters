@@ -39,6 +39,9 @@
     <ClInclude Include="Memory\Memory.h">
       <Filter>Memory</Filter>
     </ClInclude>
+    <ClInclude Include="Memory\Ref_ptr.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

@@ -28,6 +28,7 @@
     <ClInclude Include="Math\Vec4.h" />
     <ClInclude Include="Math\VecBase.h" />
     <ClInclude Include="Memory\Memory.h" />
+    <ClInclude Include="Memory\Ref_ptr.h" />
     <ClInclude Include="Windows\Application.h" />
     <ClInclude Include="Windows\Base.h" />
     <ClInclude Include="Windows\Event.h" />

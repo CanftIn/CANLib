@@ -105,16 +105,16 @@ namespace CAN
 
 	template<class T> const Vec<4, T> Vec<4, T>::ZERO(CAN_ZERO);
 	template<class T> const Vec<4, T> Vec<4, T>::UNIT_SCALE(CAN_ONE);
-	template<class T> const Vec<4, T> Vec<4, T>::UNIT_X(CAN_ONE, CAN_ZERO, CAN_ZERO, EDX_ZERO);
-	template<class T> const Vec<4, T> Vec<4, T>::UNIT_Y(CAN_ZERO, CAN_ONE, CAN_ZERO, EDX_ZERO);
-	template<class T> const Vec<4, T> Vec<4, T>::UNIT_Z(CAN_ZERO, CAN_ZERO, CAN_ONE, EDX_ZERO);
-	template<class T> const Vec<4, T> Vec<4, T>::UNIT_W(CAN_ZERO, CAN_ZERO, CAN_ZERO, EDX_ONE);
+	template<class T> const Vec<4, T> Vec<4, T>::UNIT_X(CAN_ONE, CAN_ZERO, CAN_ZERO, CAN_ZERO);
+	template<class T> const Vec<4, T> Vec<4, T>::UNIT_Y(CAN_ZERO, CAN_ONE, CAN_ZERO, CAN_ZERO);
+	template<class T> const Vec<4, T> Vec<4, T>::UNIT_Z(CAN_ZERO, CAN_ZERO, CAN_ONE, CAN_ZERO);
+	template<class T> const Vec<4, T> Vec<4, T>::UNIT_W(CAN_ZERO, CAN_ZERO, CAN_ZERO, CAN_ONE);
 	template<class T> const Vec<4, T> Vec<4, T>::UNIT[4] =
 	{
-		Vec<4, T>(CAN_ONE, CAN_ZERO, CAN_ZERO, EDX_ZERO),
-		Vec<4, T>(CAN_ZERO, CAN_ONE, CAN_ZERO, EDX_ZERO),
-		Vec<4, T>(CAN_ZERO, CAN_ZERO, CAN_ONE, EDX_ZERO),
-		Vec<4, T>(CAN_ZERO, CAN_ZERO, CAN_ZERO, EDX_ONE)
+		Vec<4, T>(CAN_ONE, CAN_ZERO, CAN_ZERO, CAN_ZERO),
+		Vec<4, T>(CAN_ZERO, CAN_ONE, CAN_ZERO, CAN_ZERO),
+		Vec<4, T>(CAN_ZERO, CAN_ZERO, CAN_ONE, CAN_ZERO),
+		Vec<4, T>(CAN_ZERO, CAN_ZERO, CAN_ZERO, CAN_ONE)
 	};
 
 	//----------------------------------------------------------------------------------------------
