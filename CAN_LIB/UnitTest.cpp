@@ -1,7 +1,6 @@
 #include "UnitTest.hpp"
 
-#include <iostream>
-
+/*
 template<class T1, class T2> struct StaticTypeCheckEQ;
 template<class T> struct StaticTypeCheckEQ<T, T> {};
 
@@ -17,6 +16,36 @@ TEST_CASE(EnableIf)
     struct T;
     StaticTypeCheckEQ<EnableIf<true, T>, T>();
 }
+*/
+
+class cppunit : public UnitTest
+{
+public:
+    void single_test()
+    {
+        CHECK(2 + 2, 5);
+    }
+};
 
 int main()
-{}
+{
+    cppunit test;
+    test.run();
+
+    return 0;
+}
+
+/**
+    F
+    ==================================================
+    FAIL: single_test
+    --------------------------------------------------
+    File "UnitTest.cpp", line 26 in single_test
+    Checking 2 + 2 == 5
+    Error: "4" ! = "5"
+
+    --------------------------------------------------
+    Ran 1 checks in 0s
+
+    FAILED (failures=1)
+*/
