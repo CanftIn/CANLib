@@ -23,7 +23,18 @@ class cppunit : public UnitTest
 public:
     void single_test()
     {
-        CHECK(2 + 2, 5);
+        CHECK(2 + 2, 4);
+
+        CHECK_BOOL(2 + 2 == 4);
+
+        CHECK_STR("ab", "ab");
+
+        error_test();
+    }
+
+    void error_test()
+    {
+        //CHECK_STR("shuaibi", "ab");
     }
 };
 

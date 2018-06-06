@@ -32,7 +32,6 @@ class UnitTest
 public:
     UnitTest() : checks(0), fails(0) {}
 
-
     template<typename T>
     void check(T a, T b, const std::string& stra, const std::string& strb, 
             const std::string& file, int line, const std::string& func)
@@ -77,15 +76,13 @@ public:
 
     int run()
     {
-        //std::streambuf *ocin = std::cin.rdbuf();
         single_test();
-        //std::cin.rdbuf(ocin);
         return status();
     }
 
 #define CHECK(A, B) check<long long>(A, B, #A, #B, __FILE__, __LINE__, __FUNCTION__);
-#define CHECK_BOOLEAN(A, B) check<bool>(A, true, #A, "TRUE", __FILE__, __LINE__, __FUNCTION__);
-#define CHECK_STRING(A, B) check<const string*>(A, B, #A, #B, __FILE__, __LINE__, __FUNCTION__);
+#define CHECK_BOOL(A) check<bool>(A, true, #A, "TRUE", __FILE__, __LINE__, __FUNCTION__);
+#define CHECK_STR(A, B) check<const std::string&>(A, B, #A, #B, __FILE__, __LINE__, __FUNCTION__);
 
 public:
     int checks;
