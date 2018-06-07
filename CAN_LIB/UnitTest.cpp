@@ -17,7 +17,7 @@ TEST_CASE(EnableIf)
     StaticTypeCheckEQ<EnableIf<true, T>, T>();
 }
 */
-
+/*
 class cppunit : public UnitTest
 {
 public:
@@ -37,12 +37,33 @@ public:
         //CHECK_STR("shuaibi", "ab");
     }
 };
+*/
+
+class BasicTest : public TestSuite {
+protected:
+    int a, b;
+public:
+
+    void setup() {
+        std::cout << "setup " << std::endl;
+        a = 1234;
+        b = 4321;
+    }
+
+    void teardown() {
+        std::cout << "teardown " << std::endl;
+    }
+
+};
+
+ADDTEST(BasicTest, test_eq) {
+    a =1; b = 10;
+    eq(a, b);
+}
 
 int main()
 {
-    cppunit test;
-    test.run();
-
+    UnitTest::getInstance()->run();
     return 0;
 }
 
