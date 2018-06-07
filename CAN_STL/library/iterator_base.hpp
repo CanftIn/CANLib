@@ -6,8 +6,8 @@
 #define MODERN_ITERATOR_ACHIEVE
 #endif
 
-#include "type.h"
-#include "type_traits.h"
+#include "type.hpp"
+#include "type_traits.hpp"
 
 namespace Can
 {

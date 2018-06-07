@@ -2,9 +2,9 @@
 #ifndef _UNINITIALIZED_H_
 #define _UNINITIALIZED_H_
 
-#include "iterator.h"
-#include "type_traits.h"
-#include "construct.h"
+#include "iterator.hpp"
+#include "type_traits.hpp"
+#include "construct.hpp"
 
 #include <cstring> /* memcpy() */
 

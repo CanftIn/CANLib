@@ -7,9 +7,9 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
-#include "allocator.h"
-#include "iterator.h"
-#include "uninitialized.h"
+#include "allocator.hpp"
+#include "iterator.hpp"
+#include "uninitialized.hpp"
 
 // not support difference_type iterator
 // you can do it like:

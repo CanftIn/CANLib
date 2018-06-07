@@ -4,7 +4,7 @@
 
 #include <new>
 
-#include "type_traits.h"
+#include "type_traits.hpp"
 
 namespace Can
 {

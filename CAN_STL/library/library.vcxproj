@@ -143,14 +143,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="allocator.h" />
-    <ClInclude Include="construct.h" />
-    <ClInclude Include="iterator.h" />
-    <ClInclude Include="iterator_base.h" />
-    <ClInclude Include="type.h" />
-    <ClInclude Include="type_traits.h" />
-    <ClInclude Include="uninitialized.h" />
-    <ClInclude Include="vector.h" />
+    <ClInclude Include="allocator.hpp" />
+    <ClInclude Include="construct.hpp" />
+    <ClInclude Include="iterator.hpp" />
+    <ClInclude Include="iterator_base.hpp" />
+    <ClInclude Include="type.hpp" />
+    <ClInclude Include="type_traits.hpp" />
+    <ClInclude Include="uninitialized.hpp" />
+    <ClInclude Include="vector.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
