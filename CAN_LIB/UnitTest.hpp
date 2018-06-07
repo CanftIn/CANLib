@@ -34,7 +34,7 @@
     void test_case_function_##Name(void)
 
 /************************************************/
-
+/*
 #define GENERATE_CLASS_NAME(CLASS, FUNCTION) CLASS##FUNCTION
 
 #define ADDTEST(parent_class, func_name) \
@@ -64,6 +64,50 @@ private: \
 const unsigned long GENERATE_CLASS_NAME(parent_class, func_name)::addInstanceIndex = \
     UnitTest::getInstance()->addTest(new GENERATE_CLASS_NAME(parent_class, func_name)); \
 void GENERATE_CLASS_NAME(parent_class, func_name)::testBody()
+*/
+#define CHECK_MARCO(a, b) \
+    if(a == b) \
+        std::cout << "T"; \
+    else \
+        std::cout << "F"; \
+    std::cout << "Case " << UnitTest::getInstance()->getInvokeCount() << std::endl; \
+    std::cout << "==================================================" << std::endl; \
+    std::cout << "--------------------------------------------------" << std::endl; \
+    std::cout << "  Checking " << #a << " == " << #b << std::endl; \
+    std::cout << "  Error: \"" << #a << "\" != \"" << #b << "\"" << std::endl << std::endl;
+
+#define CHECK(A, B) check<long long>(A, B, #A, #B, __FILE__, __LINE__, __FUNCTION__);
+
+#define GENERATE_CLASS_NAME(CLASS, FUNCTION) CLASS##FUNCTION
+
+#define ADDTEST(parent_class, func_name) \
+class GENERATE_CLASS_NAME(parent_class, func_name) : public parent_class \
+{ \
+public: \
+    GENERATE_CLASS_NAME(parent_class, func_name)() {} \
+    void testBody(); \
+    void check() \
+    { \
+        CHECK_MARCO(1, 1); \
+    } \
+    void status() \
+    { \
+        std::cout << "status" << std::endl; \
+    } \
+private: \
+    static const unsigned long addInstanceIndex; \
+    std::vector<const char*> msgs; \
+    void addMsg(const char* msg) {msgs.push_back(msg);} \
+    GENERATE_CLASS_NAME(parent_class, func_name) \
+        (const GENERATE_CLASS_NAME(parent_class, func_name)&); \
+    GENERATE_CLASS_NAME(parent_class, func_name)& \
+        operator=(const GENERATE_CLASS_NAME(parent_class, func_name)&); \
+};\
+const unsigned long GENERATE_CLASS_NAME(parent_class, func_name)::addInstanceIndex = \
+    UnitTest::getInstance()->addTest(new GENERATE_CLASS_NAME(parent_class, func_name)); \
+void GENERATE_CLASS_NAME(parent_class, func_name)::testBody()
+
+
 
 
 class TestSuite
