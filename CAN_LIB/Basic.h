@@ -25,6 +25,7 @@ using std::wstring;
 #include <vector>
 using std::vector;
 #include <algorithm>
+#include <functional>
 using std::min;
 using std::max;
 using std::swap;
