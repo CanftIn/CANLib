@@ -6,8 +6,8 @@
 	MIT licence
 */
 
-#ifndef CAN_DELEGATE_H
-#define CAN_DELEGATE_H
+#ifndef CAN_DELEGATE
+#define CAN_DELEGATE
 
 #include "Basic.h"
 

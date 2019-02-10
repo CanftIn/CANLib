@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../Delegate.h"
+#include "../include/Delegate.h"
 
 int main()
 {

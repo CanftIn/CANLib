@@ -19,13 +19,17 @@
 #include <fstream>
 
 // STL include files
-#include <cstring>
+#include <string>
 using std::string;
 using std::wstring;
 #include <vector>
 using std::vector;
 #include <algorithm>
 #include <functional>
+#include <type_traits>
+#include <memory>
+#include <limits>
+#include <chrono>
 using std::min;
 using std::max;
 using std::swap;
